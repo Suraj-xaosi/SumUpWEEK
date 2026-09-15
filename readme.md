@@ -5,6 +5,7 @@ week (commits, pull requests, closed issues), optionally combines it with
 notes you type in yourself, and uses a free AI model to write a clean
 weekly summary for you — ready to paste into a standup, a status update,
 or a LinkedIn post.
+It also creates report history in markdown file (reportHistory.md) contains all the repot in markdown formatt. 
 
 It can even try to match **your own writing style**, if you give it a few
 examples of things you've written before.
