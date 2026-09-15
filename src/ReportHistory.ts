@@ -1,0 +1,31 @@
+import * as fs from "node:fs/promises";
+import * as path from "node:path";
+
+const historyFilePath = path.join(process.cwd(), "reportHistory.md");
+const historyTitle = "# Weekly Report History\n\n";
+
+async function ensureHistoryFile(): Promise<void> {
+  try {
+    const stats = await fs.stat(historyFilePath);
+
+    if (stats.size === 0) {
+      await fs.writeFile(historyFilePath, historyTitle, "utf-8");
+    }
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
+      throw error;
+    }
+
+    await fs.writeFile(historyFilePath, historyTitle, "utf-8");
+  }
+}
+
+export async function appendReportToHistory(report: string): Promise<void> {
+  await ensureHistoryFile();
+
+  const timestamp = new Date().toISOString().replace("T", " ").replace("Z", " UTC");
+  const cleanReport = report.trim().replace(/\n{3,}/g, "\n\n");
+  const historyEntry = `## ${timestamp}\n\n${cleanReport}\n\n---\n\n`;
+
+  await fs.appendFile(historyFilePath, historyEntry, "utf-8");
+}

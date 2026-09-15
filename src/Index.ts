@@ -1,6 +1,7 @@
 import * as fs from "node:fs/promises";
 import clipboardy from "clipboardy";
 import { generateWeeklyReport } from "./GenerateReport.js";
+import { appendReportToHistory } from "./ReportHistory.js";
 
 async function main() {
   console.log("=== Weekly Dev Report Generator ===\n");
@@ -11,6 +12,9 @@ async function main() {
     console.log("\n=== Your Weekly Report ===\n");
     console.log(report);
     console.log("\n===========================\n");
+
+    await appendReportToHistory(report);
+    console.log("Added to reportHistory.md");
 
     const filename = `report-${new Date().toISOString().split("T")[0]}.txt`;
     await fs.writeFile(filename, report, "utf-8");

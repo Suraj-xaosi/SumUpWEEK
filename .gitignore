@@ -11,3 +11,6 @@ src/voiceExamples.ts
 
 # Generated reports
 report-*.txt
+reportHistory.md
+
+
