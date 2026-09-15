@@ -40,6 +40,8 @@ Below is a draft summary. Check two things:
    (something that didn't actually happen this week)?
 2. Does the tone sound generic/robotic rather than like a real person's
    natural writing style?
+3. Does the draft consistently describe one developer using first-person
+  singular language ("I", "my", "me") rather than "we" or "the team"?
 
 Draft:
 "${draft}"
@@ -103,8 +105,8 @@ export async function generateWeeklyReport(): Promise<string> {
   }
 
   const instruction = voiceContext.hasExamples
-    ? "Using the data above, and matching the user's writing style, write a weekly dev-update summary. 100-150 words, formatted like a professional post."
-    : "Using the data above, write a clean, professional weekly dev-update summary. 100-150 words.";
+    ? "Using the data above, and matching the user's writing style, write a weekly dev-update summary from the perspective of one developer. Use first-person singular language (I, my, me) throughout. Never refer to a team, company, or group as the author, and never use we or the team. Write 100-150 words, formatted like a professional post."
+    : "Using the data above, write a clean, professional weekly dev-update summary from the perspective of one developer. Use first-person singular language (I, my, me) throughout. Never refer to a team, company, or group as the author, and never use we or the team. Write 100-150 words.";
 
   sections.push(instruction);
 
