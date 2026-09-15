@@ -1,0 +1,20 @@
+{
+  "name": "dev-weekly-agent",
+  "version": "1.0.0",
+  "description": "Generates a personalized weekly dev-activity summary from your GitHub activity and manual notes, using a free LLM (Groq).",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "report": "tsx src/index.ts",
+    "eval": "tsx src/evals.ts"
+  },
+  "dependencies": {
+    "clipboardy": "^4.0.0",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}

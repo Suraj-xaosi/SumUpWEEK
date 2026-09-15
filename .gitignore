@@ -1,0 +1,11 @@
+node_modules
+dist
+
+# Your real secrets — never commit this
+.env
+
+# Your personal writing-style samples — never commit this
+src/voiceExamples.ts
+
+# Generated reports
+report-*.txt
