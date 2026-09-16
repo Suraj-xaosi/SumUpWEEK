@@ -1,12 +1,13 @@
 import * as readline from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
+import { terminalColors as colors } from "./TerminalColors.js";
 
 export async function collectDaysBack(): Promise<number> {
   const rl = readline.createInterface({ input, output });
 
   while (true) {
     const answer = await rl.question(
-      "How many past days should I summarize? (1-10, default 7): "
+      colors.info("How many past days should I summarize? (1-10, default 7): ")
     );
     const trimmedAnswer = answer.trim();
 
@@ -21,7 +22,7 @@ export async function collectDaysBack(): Promise<number> {
       return daysBack;
     }
 
-    console.log("Please enter a whole number from 1 to 10, or press Enter for 7.");
+    console.log(colors.warning("Please enter a whole number from 1 to 10, or press Enter for 7."));
   }
 }
 
@@ -35,7 +36,7 @@ export async function collectManualBullets(): Promise<string[]> {
   const rl = readline.createInterface({ input, output });
 
   const wantsToAdd = await rl.question(
-    "\nWould you like to add anything besides your GitHub activity? (y/n): "
+    colors.info("\nWould you like to add anything besides your GitHub activity? (y/n): ")
   );
 
   if (wantsToAdd.trim().toLowerCase() !== "y") {
@@ -43,12 +44,12 @@ export async function collectManualBullets(): Promise<string[]> {
     return [];
   }
 
-  console.log("\nOne line = one bullet point. Press Enter on an empty line when done.\n");
+  console.log(colors.muted("\nOne line = one bullet point. Press Enter on an empty line when done.\n"));
 
   const bullets: string[] = [];
 
   while (true) {
-    const line = await rl.question("> ");
+    const line = await rl.question(colors.bullet("> "));
 
     if (line.trim() === "") {
       break;

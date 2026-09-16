@@ -1,4 +1,5 @@
 import { config } from "./config.js";
+import { terminalColors as colors } from "./TerminalColors.js";
 
 export interface ActivityItem {
   type: "commit" | "pull_request" | "issue_closed";
@@ -43,7 +44,7 @@ async function fetchPullRequests(since: string): Promise<ActivityItem[]> {
   const response = await fetch(url, { headers: githubHeaders() });
 
   if (!response.ok) {
-    console.error("[fetchPullRequests] GitHub API error:", response.status, await response.text());
+    console.error(colors.error("[fetchPullRequests] GitHub API error:"), response.status, await response.text());
     return []; // Fail soft — one data source failing shouldn't crash the whole tool
   }
 
@@ -63,7 +64,7 @@ async function fetchClosedIssues(since: string): Promise<ActivityItem[]> {
   const response = await fetch(url, { headers: githubHeaders() });
 
   if (!response.ok) {
-    console.error("[fetchClosedIssues] GitHub API error:", response.status, await response.text());
+    console.error(colors.error("[fetchClosedIssues] GitHub API error:"), response.status, await response.text());
     return [];
   }
 
@@ -83,7 +84,7 @@ async function fetchCommits(since: string): Promise<ActivityItem[]> {
   const response = await fetch(url, { headers: githubHeaders() });
 
   if (!response.ok) {
-    console.error("[fetchCommits] GitHub API error:", response.status, await response.text());
+    console.error(colors.error("[fetchCommits] GitHub API error:"), response.status, await response.text());
     return [];
   }
 

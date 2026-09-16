@@ -1,6 +1,7 @@
 import { callLLM } from "./callllm.js";
 import { fetchGithubActivity, type ActivityItem } from "./FetchGithubActivity.js";
 import { collectDaysBack, collectManualBullets } from "./ManualInput.js";
+import { terminalColors as colors } from "./TerminalColors.js";
 import { getVoiceContext } from "./VoiceExamples.example.js";
 
 export function formatGithubActivity(activity: ActivityItem[]): string {
@@ -73,7 +74,7 @@ If there's a problem, give one short reason (a single line).
     return draft;
   }
 
-  console.log(`\n(Refining — reason: ${critique.trim()})\n`);
+  console.log(colors.warning(`\n(Refining — reason: ${critique.trim()})\n`));
 
   const refinePrompt = `
 This was the draft:
@@ -96,7 +97,7 @@ only the new draft, no explanation.
 export async function generateWeeklyReport(): Promise<string> {
   const daysBack = await collectDaysBack();
 
-  console.log("Fetching GitHub activity...");
+  console.log(colors.info("Fetching GitHub activity..."));
   const githubActivity = await fetchGithubActivity(daysBack);
 
   const manualBullets = await collectManualBullets();
@@ -131,7 +132,7 @@ export async function generateWeeklyReport(): Promise<string> {
 
   const finalPrompt = sections.join("\n\n---\n\n");
 
-  console.log("\nGenerating summary...\n");
+  console.log(colors.info("\nGenerating summary...\n"));
   const draft = await callLLM(finalPrompt);
 
   const finalReport = await reflectAndRefine(draft, voiceContext.hasExamples);
