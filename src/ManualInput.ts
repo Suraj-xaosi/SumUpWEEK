@@ -1,6 +1,30 @@
 import * as readline from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
 
+export async function collectDaysBack(): Promise<number> {
+  const rl = readline.createInterface({ input, output });
+
+  while (true) {
+    const answer = await rl.question(
+      "How many past days should I summarize? (1-10, default 7): "
+    );
+    const trimmedAnswer = answer.trim();
+
+    if (trimmedAnswer === "") {
+      rl.close();
+      return 7;
+    }
+
+    const daysBack = Number(trimmedAnswer);
+    if (Number.isInteger(daysBack) && daysBack >= 1 && daysBack <= 10) {
+      rl.close();
+      return daysBack;
+    }
+
+    console.log("Please enter a whole number from 1 to 10, or press Enter for 7.");
+  }
+}
+
 /**
  * Asks the user, in the terminal, whether they want to add anything that
  * isn't tracked on GitHub (meetings, discussions, helping a teammate, etc).

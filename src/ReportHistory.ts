@@ -1,5 +1,6 @@
 import * as fs from "node:fs/promises";
 import * as path from "node:path";
+import { formatReport } from "./GenerateReport.js";
 
 const historyFilePath = path.join(process.cwd(), "reportHistory.md");
 const historyTitle = "# Weekly Report History\n\n";
@@ -24,7 +25,7 @@ export async function appendReportToHistory(report: string): Promise<void> {
   await ensureHistoryFile();
 
   const timestamp = new Date().toISOString().replace("T", " ").replace("Z", " UTC");
-  const cleanReport = report.trim().replace(/\n{3,}/g, "\n\n");
+  const cleanReport = formatReport(report);
   const historyEntry = `## ${timestamp}\n\n${cleanReport}\n\n---\n\n`;
 
   await fs.appendFile(historyFilePath, historyEntry, "utf-8");

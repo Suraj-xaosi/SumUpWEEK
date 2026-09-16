@@ -4,7 +4,11 @@ import { generateWeeklyReport } from "./GenerateReport.js";
 import { appendReportToHistory } from "./ReportHistory.js";
 
 async function main() {
-  console.log("=== Weekly Dev Report Generator ===\n");
+  console.log(`
+========================================
+              SUM UP WEEK
+========================================
+`);
 
   try {
     const report = await generateWeeklyReport();

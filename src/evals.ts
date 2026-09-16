@@ -1,4 +1,4 @@
-import { formatGithubActivity, formatManualBullets } from "./GenerateReport.js";
+import { formatGithubActivity, formatManualBullets, formatReport } from "./GenerateReport.js";
 import { fetchGithubActivity } from "./FetchGithubActivity.js";
 
 interface EvalCase {
@@ -23,6 +23,10 @@ const evalCases: EvalCase[] = [
       ]);
       return result.includes("- [commit] Fix bug");
     },
+  },
+  {
+    name: "formatReport separates a single-line report into readable paragraphs",
+    run: async () => formatReport("First sentence. Second sentence. Third sentence.").includes("\n\n"),
   },
   {
     name: "fetchGithubActivity never throws, even if the network/API call fails",

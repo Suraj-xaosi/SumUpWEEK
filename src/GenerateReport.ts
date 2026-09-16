@@ -1,6 +1,6 @@
 import { callLLM } from "./callllm.js";
 import { fetchGithubActivity, type ActivityItem } from "./FetchGithubActivity.js";
-import { collectManualBullets } from "./ManualInput.js";
+import { collectDaysBack, collectManualBullets } from "./ManualInput.js";
 import { getVoiceContext } from "./VoiceExamples.example.js";
 
 export function formatGithubActivity(activity: ActivityItem[]): string {
@@ -17,6 +17,23 @@ export function formatManualBullets(bullets: string[]): string {
   }
 
   return bullets.map((b) => `- ${b}`).join("\n");
+}
+
+export function formatReport(report: string): string {
+  const cleanReport = report.replace(/\r\n?/g, "\n").trim();
+
+  if (cleanReport.includes("\n")) {
+    return cleanReport.replace(/\n{3,}/g, "\n\n");
+  }
+
+  const sentences = cleanReport.split(/(?<=[.!?])\s+(?=[A-Z])/);
+  const paragraphs: string[] = [];
+
+  for (let index = 0; index < sentences.length; index += 2) {
+    paragraphs.push(sentences.slice(index, index + 2).join(" "));
+  }
+
+  return paragraphs.join("\n\n");
 }
 
 /**
@@ -77,8 +94,10 @@ only the new draft, no explanation.
  * draft, then self-check/refine it.
  */
 export async function generateWeeklyReport(): Promise<string> {
+  const daysBack = await collectDaysBack();
+
   console.log("Fetching GitHub activity...");
-  const githubActivity = await fetchGithubActivity(7);
+  const githubActivity = await fetchGithubActivity(daysBack);
 
   const manualBullets = await collectManualBullets();
 
@@ -105,8 +124,8 @@ export async function generateWeeklyReport(): Promise<string> {
   }
 
   const instruction = voiceContext.hasExamples
-    ? "Using the data above, and matching the user's writing style, write a weekly dev-update summary from the perspective of one developer. Use first-person singular language (I, my, me) throughout. Never refer to a team, company, or group as the author, and never use we or the team. Write 100-150 words, formatted like a professional post."
-    : "Using the data above, write a clean, professional weekly dev-update summary from the perspective of one developer. Use first-person singular language (I, my, me) throughout. Never refer to a team, company, or group as the author, and never use we or the team. Write 100-150 words.";
+    ? "Using the data above, and matching the user's writing style, write a weekly dev-update summary from the perspective of one developer. Use first-person singular language (I, my, me) throughout. Never refer to a team, company, or group as the author, and never use we or the team. Write 100-150 words as Markdown with a ## Summary section and a ## Highlights section containing 3-5 bullet points. Keep paragraphs short and separated by blank lines."
+    : "Using the data above, write a clean, professional weekly dev-update summary from the perspective of one developer. Use first-person singular language (I, my, me) throughout. Never refer to a team, company, or group as the author, and never use we or the team. Write 100-150 words as Markdown with a ## Summary section and a ## Highlights section containing 3-5 bullet points. Keep paragraphs short and separated by blank lines.";
 
   sections.push(instruction);
 
@@ -117,5 +136,5 @@ export async function generateWeeklyReport(): Promise<string> {
 
   const finalReport = await reflectAndRefine(draft, voiceContext.hasExamples);
 
-  return finalReport;
+  return formatReport(finalReport);
 }
