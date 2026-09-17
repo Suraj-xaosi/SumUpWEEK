@@ -36,6 +36,8 @@ Open a terminal (on Windows: "Command Prompt" or "PowerShell"; on Mac: "Terminal
 git clone <the repository URL you were given>
 cd dev-weekly-agent
 ```
+then delete the reportHistory.md file  ( because thats my work history )
+your will be created automatically .
 
 ## Step 2 — Install the project's dependencies
 
