@@ -1,19 +1,19 @@
 # Weekly Report History
 
-## 2026-09-17 19:55:20.181 UTC
+## 2026-09-17 19:57:20.804 UTC
 
 ## Summary  
 
-This week I focused on stabilizing the project and expanding its functionality. I resolved several environment and type‑related errors, added missing async handling, and cleaned up naming inconsistencies. I also removed the `package-lock.json` from tracking and re‑uploaded the repository. New features were introduced, including an AI chat widget with a launcher, a report‑history view, and a cron mode for scheduled tasks. I enhanced the user experience with selectable days, colored terminal output, and updated documentation and instructions in the README and `env.example`. After a brief fallback to a simpler version to ensure reliability, I finalized the changes with a weekly report commit.
+This week I focused on improving user interaction and stability across the project. I refined the AI chat widget and its launcher to address lingering bugs, and introduced a new prompt that now asks users to select days, enhancing scheduling flexibility. Visual feedback was boosted by adding colour coding to terminal output, making logs easier to read. I also implemented a cron mode for automated tasks and updated the README with clear instructions for new contributors. Minor housekeeping included removing duplicate history entries and applying a quick fallback to a simpler version when needed. All changes were documented in the weekly report for 2026‑09‑17.
 
 ## Highlights  
 
-- Integrated AI chat feature and fixed its widget/launcher bugs.  
-- Added report history, cron mode, and day‑selection prompts for users.  
-- Cleaned up environment setup: introduced `env.example` and removed `package-lock.json` from version control.  
-- Improved CLI aesthetics with colored output and updated README instructions.  
-- Fixed async issues, type errors, and name mismatches to enhance stability.
+- Fixed AI chat widget and launcher issues.  
+- Added day‑selection prompt for users.  
+- Implemented coloured terminal output and cron mode.  
+- Updated README with usage instructions.  
+- Cleaned up duplicate history and remove cron mode and fall back to simple version.
 
 ---
 
-# Weekly Report History
+
