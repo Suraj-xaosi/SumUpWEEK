@@ -3,10 +3,6 @@ import { stdin as input, stdout as output } from "node:process";
 import { terminalColors as colors } from "./TerminalColors.js";
 
 export async function collectDaysBack(): Promise<number> {
-  if (process.env.CRON_MODE === "true") {
-    return 7;
-  }
-
   const rl = readline.createInterface({ input, output });
 
   while (true) {
@@ -37,10 +33,6 @@ export async function collectDaysBack(): Promise<number> {
  * returned immediately and no further prompts appear.
  */
 export async function collectManualBullets(): Promise<string[]> {
-  if (process.env.CRON_MODE === "true") {
-    return [];
-  }
-
   const rl = readline.createInterface({ input, output });
 
   const wantsToAdd = await rl.question(

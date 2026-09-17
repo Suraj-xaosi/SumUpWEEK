@@ -27,6 +27,12 @@ export async function appendReportToHistory(report: string): Promise<void> {
   const timestamp = new Date().toISOString().replace("T", " ").replace("Z", " UTC");
   const cleanReport = formatReport(report);
   const historyEntry = `## ${timestamp}\n\n${cleanReport}\n\n---\n\n`;
+  const history = await fs.readFile(historyFilePath, "utf-8");
 
-  await fs.appendFile(historyFilePath, historyEntry, "utf-8");
+  if (history.startsWith(historyTitle)) {
+    await fs.writeFile(historyFilePath, `${historyTitle}${historyEntry}${history.slice(historyTitle.length)}`, "utf-8");
+    return;
+  }
+
+  await fs.writeFile(historyFilePath, `${historyTitle}${historyEntry}${history}`, "utf-8");
 }

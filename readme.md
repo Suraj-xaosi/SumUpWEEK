@@ -121,35 +121,17 @@ The tool will:
 2. Ask if you'd like to add anything else manually (type `y` or `n`)
 3. Generate your summary
 4. Show it in the terminal, save it to a file like `report-2026-09-15.txt`, and copy it to your clipboard
+5. Ask whether you want to push the report history to GitHub (type `y` or `n`)
+
+If you answer `y`, the tool commits `reportHistory.md` and pushes it to GitHub.
+Any other answer exits without pushing.
+
+Each new report is placed at the top of `reportHistory.md`, directly below the
+history title, so the latest report appears first when you open the file.
+When there is little GitHub activity, the generated report stays brief and
+includes only the most relevant highlights instead of padding the summary.
 
 Just paste it (Ctrl+V / Cmd+V) wherever you need it.
-
-## Step 8 - Run automatically on Windows
-
-The unattended command skips both prompts, uses the default 7-day range, appends
-the report to `reportHistory.md`, commits it, and pushes it to GitHub:
-
-```powershell
-npm run report:cron
-```
-
-Before scheduling it, run that command once manually and make sure `git push`
-does not ask for credentials. Windows Task Scheduler cannot answer an
-interactive Git prompt.
-
-To schedule it weekly:
-
-1. Open **Task Scheduler** and choose **Create Basic Task**.
-2. Set the trigger to **Weekly**, choose Monday at 9:00 AM, and select **Start a program**.
-3. Set **Program/script** to `C:\Program Files\nodejs\npm.cmd` (adjust if Node.js is installed elsewhere).
-4. Set **Add arguments** to `run report:cron`.
-5. Set **Start in** to the full project folder, for example
-   `C:\Users\suraj\OneDrive\Desktop\s\sumupweek`.
-6. In the task properties, enable **Run whether user is logged on or not** if
-   the report should run while you are signed out.
-
-The `report:cron` script sets `CRON_MODE=true` automatically, so no PowerShell
-inline environment-variable syntax is needed.
 
 ---
 

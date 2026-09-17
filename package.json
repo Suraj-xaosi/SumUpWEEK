@@ -6,12 +6,10 @@
   "private": true,
   "scripts": {
     "report": "tsx src/index.ts",
-    "report:cron": "cross-env CRON_MODE=true tsx src/cronRun.ts",
     "eval": "tsx src/evals.ts"
   },
   "dependencies": {
     "clipboardy": "^4.0.0",
-    "cross-env": "^7.0.3",
     "dotenv": "^16.4.5"
   },
   "devDependencies": {

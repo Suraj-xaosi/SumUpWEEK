@@ -124,9 +124,14 @@ export async function generateWeeklyReport(): Promise<string> {
     );
   }
 
+  const hasLowActivity = githubActivity.length <= 3;
+  const lengthInstruction = hasLowActivity
+    ? "Because there is little GitHub activity, keep this very short: write 35-70 words in total with a ## Summary section and a ## Highlights section containing 1-3 bullets. Mention only the actual work provided. Do not invent work, repeat points, or add filler to reach the word count."
+    : "Write 100-150 words as Markdown with a ## Summary section and a ## Highlights section containing 3-5 bullet points. Keep paragraphs short and separated by blank lines.";
+
   const instruction = voiceContext.hasExamples
-    ? "Using the data above, and matching the user's writing style, write a weekly dev-update summary from the perspective of one developer. Use first-person singular language (I, my, me) throughout. Never refer to a team, company, or group as the author, and never use we or the team. Write 100-150 words as Markdown with a ## Summary section and a ## Highlights section containing 3-5 bullet points. Keep paragraphs short and separated by blank lines."
-    : "Using the data above, write a clean, professional weekly dev-update summary from the perspective of one developer. Use first-person singular language (I, my, me) throughout. Never refer to a team, company, or group as the author, and never use we or the team. Write 100-150 words as Markdown with a ## Summary section and a ## Highlights section containing 3-5 bullet points. Keep paragraphs short and separated by blank lines.";
+    ? `Using the data above, and matching the user's writing style, write a weekly dev-update summary from the perspective of one developer. Use first-person singular language (I, my, me) throughout. Never refer to a team, company, or group as the author, and never use we or the team. ${lengthInstruction}`
+    : `Using the data above, write a clean, professional weekly dev-update summary from the perspective of one developer. Use first-person singular language (I, my, me) throughout. Never refer to a team, company, or group as the author, and never use we or the team. ${lengthInstruction}`;
 
   sections.push(instruction);
 
