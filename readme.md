@@ -117,7 +117,7 @@ npm run report
 ```
 
 The tool will:
-1. Fetch your GitHub activity from the last 7 days
+1. Fetch your GitHub activity from the last 7 days, including bounded excerpts of recent commit diffs and pull-request descriptions (the report input is capped to fit the model's request limit)
 2. Ask if you'd like to add anything else manually (type `y` or `n`)
 3. Generate your summary
 4. Show it in the terminal, save it to a file like `report-2026-09-15.txt`, and copy it to your clipboard
@@ -156,7 +156,7 @@ If you started Step 6 but didn't finish it (or deleted the file), either finish 
 
 ## Is this safe? Where do my keys go?
 
-This tool runs entirely on your own computer. Your Groq key and GitHub token are read from your local `.env` file and used only to call Groq's and GitHub's official APIs directly — you can see this yourself by opening `src/callLLM.ts` and `src/fetchGithubActivity.ts`; there is no third-party server anywhere in between. Nothing you type or paste is sent anywhere except to Groq (for the AI summary) and GitHub (to read your activity).
+The tool runs on your computer and calls GitHub's and Groq's official APIs directly. To make summaries more accurate, it sends commit-message text, bounded excerpts from up to 20 recent commit diffs (with Markdown-only changes omitted), pull-request and closed-issue descriptions, and any manual notes you enter to Groq. Do not use it with repositories or notes whose contents you are not comfortable sharing with Groq. Your GitHub token is used to read GitHub data; the tool does not send it to Groq.
 
 ---
 

@@ -29,6 +29,7 @@ export async function callLLM(prompt: string): Promise<string> {
     body: JSON.stringify({
       model: MODEL,
       messages: [{ role: "user", content: prompt }],
+      max_completion_tokens: 600,
       // 0.7, not 0 — this task is closer to creative writing (matching a
       // personal tone) than to factual data analysis, so a bit of
       // variation is desirable rather than perfectly deterministic output.
