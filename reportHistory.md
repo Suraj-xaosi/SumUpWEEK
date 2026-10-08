@@ -1,18 +1,18 @@
 # Weekly Report History
 
-## 2026-10-08 21:34:54.026 UTC
+## 2026-10-08 21:48:33.223 UTC
 
 ## Summary  
 
-This week I focused on stabilizing the data‑collection pipeline and improving the dashboard UI. I added a new client‑side `DashboardClient` component to keep the server component’s purity, and refined the rate‑limiting logic by moving checks to the correct layer and introducing a visitor‑ID regex for stricter validation. I also enhanced the GeoIP helper to safely handle IPv4/IPv6 inputs and filter private addresses. The analytics card component now accepts an optional `loadingClassName` prop for more flexible styling. Finally, I updated the project’s `.gitignore` to include a newly added markdown file.
+This week I focused on improving our data collection and analytics pipeline. I enhanced the GitHub activity fetcher by extending the `ActivityItem` type with an optional `details` field and refactoring the response interface to include issue bodies, which will allow richer reporting. I introduced a new client‑side dashboard component (`DashboardClient.tsx`) to render analytics UI while preserving the server component’s behavior. I also refined the rate‑limiting logic: a UUID pattern was added for visitor IDs, the rate‑limit check was relocated from the service layer to the router, and the service code was cleaned up accordingly. Finally, I hardened the IP‑to‑country lookup by adding proper IP validation and improving private‑IP detection.
 
 ## Highlights  
 
-- Implemented `DashboardClient` (client‑only) to preserve server component boundaries.  
-- Fixed rate‑limiter placement and added IP‑level limits with a UUID pattern.  
-- Strengthened GeoIP lookup with `isIP` validation and private‑IP detection.  
-- Extended `AnalyticsCardState` with an optional `loadingClassName` prop.  
-- Cleaned up `.gitignore` to track new documentation files.
+- Added `details` to activity items and included issue bodies in GitHub fetcher.  
+- Implemented `DashboardClient.tsx` for a responsive analytics dashboard.  
+- Introduced `VISITOR_ID_PATTERN` and moved rate‑limit handling to the router.  
+- Cleaned up rate‑limit checks in the collector service.  
+- Strengthened IP validation in `countryFrom
 
 ---
 
