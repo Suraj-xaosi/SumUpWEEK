@@ -1,5 +1,38 @@
 # Weekly Report History
 
+## 2026-10-12 13:22:36.762 UTC
+
+## Summary  
+
+This week I focused on improving the security and reliability of two of my services. In the web analysis server I introduced the **Helmet** middleware, updated the package manifest, and made corresponding adjustments in the entry point to ensure the new headers are applied correctly. I also addressed a decryption issue in the CuteBots agent by refining the secret‑vault implementation and simplifying the development command to load environment variables directly via Node. Both changes were verified locally and committed, laying the groundwork for more robust production deployments.
+
+## Highlights  
+
+- Added **Helmet** (`^8.3.0`) to the server’s dependencies for enhanced HTTP security.  
+- Modified `apps/server/src/index.ts` to integrate Helmet middleware into the Express app.  
+- Fixed decryption errors in the secret‑vault module of the CuteBots agent.  
+- Updated the agent’s `dev` script to run with `node --env-file=../../.env --import tsx --watch`, streamlining local development.
+
+---
+
+## 2026-10-08 21:50:11.453 UTC
+
+## Summary  
+
+This week I focused on improving data handling, rate‑limiting logic, and client‑side rendering. In the GitHub activity fetcher I expanded the `ActivityItem` type with an optional `details` field and renamed the response interface to better reflect issue data, adding support for the issue body. The report generator was updated to accommodate these new fields.  
+
+On the web side I introduced a new client component (`DashboardClient.tsx`) to preserve the intended client‑only behavior of the dashboard. I also refined the collector’s rate‑limiting: added a UUID pattern for visitor IDs, moved the rate‑limit check out of the service layer, and tightened IP validation in the GeoIP helper by using Node’s `isIP` utility and improving private‑IP detection.
+
+## Highlights  
+
+- Added `details` to activity items and renamed the GitHub response interface.  
+- Implemented a client‑only dashboard component to maintain proper rendering boundaries.  
+- Introduced `VISITOR_ID_PATTERN` for validating visitor IDs in the collector router.  
+- Relocated rate‑limit verification to the appropriate layer, removing redundant checks.  
+- Enhanced IP address handling in `countryFromIp.ts` with robust validation.
+
+---
+
 ## 2026-10-08 21:48:33.223 UTC
 
 ## Summary  
